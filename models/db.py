@@ -17,7 +17,19 @@ def getDatabase(clave):
     except Exception as e:
         print(f"ocurrio un error(db-1): {e}")
         return False
-
+def getDatabaseUnico(clave,valor,dato):
+    if not clave and not dato and not valor:
+        return False
+    try:
+        get_url = f'{URL}/{clave}.json?orderBy="{valor}"&equalTo="{dato}"'
+        respuesta = requests.get(get_url,timeout=5)
+        if respuesta.status_code == 200:
+            return respuesta.json()
+        return False
+    except Exception as e:
+        print(f"ocurrio un error(db-2): {e}")
+        return False
+    
 def postDatabase(clave, datos):
     if not datos or not clave:
         return False
@@ -26,7 +38,7 @@ def postDatabase(clave, datos):
         respuesta = requests.post(post_url,json=datos)
         return respuesta.status_code == 200
     except Exception as e:
-        print(f"ocurrio un error(db-2): {e}")
+        print(f"ocurrio un error(db-3): {e}")
         return False
 
 def deleteDatabase(clave):
@@ -37,7 +49,7 @@ def deleteDatabase(clave):
         respuesta = requests.delete(delete_url)
         return respuesta.status_code == 200
     except Exception as e:
-        print(f"ocurrio un error(db-3): {e}")
+        print(f"ocurrio un error(db-4): {e}")
         return False
 
 def updateDatabase(clave,datos):
@@ -48,5 +60,5 @@ def updateDatabase(clave,datos):
         respuesta = requests.patch(update_url,json=datos)
         return respuesta == 200
     except Exception as e:
-        print(f"ocurrio un error(db-4): {e}")
+        print(f"ocurrio un error(db-5): {e}")
         return False
